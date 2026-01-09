@@ -35,6 +35,9 @@ export interface ImageCropperConfigOptions {
   /// Determines how far the user can zoom in on the image.
   maxScale?: number;
 
+  /// Default image magnification factor, default value: 1.0
+  initialImageScale?: number;
+
   /// Padding between the crop rect and the layout or image boundaries.
   /// Helps to provide spacing around the crop rect within the editor.
   cropRectPadding?: geometry.EdgeInsets;
@@ -98,6 +101,7 @@ export interface ImageCropperConfigOptions {
 
 export class ImageCropperConfig {
   maxScale: number;
+  initialImageScale: number;
   cropRectPadding: geometry.EdgeInsets;
   cornerSize: geometry.Size;
   cornerColor?: string | number | CanvasGradient | CanvasPattern;
@@ -116,6 +120,7 @@ export class ImageCropperConfig {
 
   constructor(options: ImageCropperConfigOptions = {}) {
     this.maxScale = options.maxScale ?? 5.0;
+    this.initialImageScale = options.initialImageScale ?? 1.0;
     this.cropRectPadding = options.cropRectPadding ?? geometry.EdgeInsets.all(20);
     this.cornerSize = options.cornerSize ?? new geometry.Size(30, 5);
 
@@ -145,6 +150,9 @@ export class ImageCropperConfig {
     if (this.maxScale <= 0.0) {
       throw new Error("maxScale must be greater than 0");
     }
+    if (this.initialImageScale <= 0.0) {
+      throw new Error("initialImageScale must be greater than 0");
+    }
     if (this.speed <= 0.0) {
       throw new Error("speed must be greater than 0");
     }
@@ -153,6 +161,7 @@ export class ImageCropperConfig {
   copyWith(option?: ImageCropperConfigOptions): ImageCropperConfig {
     return new ImageCropperConfig({
       maxScale: option?.maxScale ?? this.maxScale,
+      initialImageScale: option?.initialImageScale ?? this.initialImageScale,
       cropRectPadding: option?.cropRectPadding ?? this.cropRectPadding,
       cornerSize: option?.cornerSize ?? this.cornerSize,
       cornerColor: option?.cornerColor ?? this.cornerColor,

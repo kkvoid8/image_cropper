@@ -256,7 +256,8 @@ export struct ImageCropper {
     if (this._actionDetails == null) {
       this._actionDetails = new ImageCropperActionDetails();
       this._actionDetails.delta = geometry.Offset.zero;
-      this._actionDetails.totalScale = 1.0;
+      // this._actionDetails.totalScale = 1.0;
+      this._actionDetails.totalScale = this._config!.initialImageScale;
       this._actionDetails.preTotalScale = 1.0;
       this._actionDetails.cropRectPadding = this._config!.cropRectPadding;
 
